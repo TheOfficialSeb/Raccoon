@@ -37,3 +37,47 @@
 	> NAME INT
 	> 
 	> ARGS {Uint32}
+- 08
+	> NAME FLO
+	> 
+	> ARGS {Cell(INT)}
+- 09
+	> NAME NEG
+	> 
+	> ARGS {Cell(INT)}
+- 0A
+	> NAME CON
+	> 
+	> ARGS {Cell(STR)}{Cell(STR)}
+- 0B
+	> NAME ADD
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 0C
+	> NAME SUB
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 0D
+	> NAME MUL
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 0E
+	> NAME DIV
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 0F
+	> NAME POW
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 10
+	> NAME MOD
+	> 
+	> ARGS {Cell(INT or FLO)}{Cell(INT or FLO)}
+- 11
+	> NAME FALSE
+	> 
+	> ARGS NONE
+- 12
+	> NAME TRUE
+	> 
+	> ARGS NONE
