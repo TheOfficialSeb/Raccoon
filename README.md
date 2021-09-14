@@ -23,13 +23,17 @@
 	> ARGS NONE
 - 04
 	> NAME GETTABLE
+	> 
 	> ARGS {Cell(TABLE)}{Cell(ANY)}
 - 05
 	> NAME SETTABLE
+	> 
 	> ARGS {Cell(TABLE)}{Cell(ANY)}{Cell(ANY)}
 - 06
 	> NAME STR
+	> 
 	> ARGS {Uint32(Length)}{Any(Must be size of length told)}
 - 07
 	> NAME INT
+	> 
 	> ARGS {Uint32}
