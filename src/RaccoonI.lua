@@ -1,41 +1,23 @@
-function toBase2(Int,Fill)
-    local BitArray = {}
-    while Int > 0 do
-        local Rest = Int%2
-        table.insert(BitArray,math.floor(Rest))
-        Int = (Int-Rest)/2
-    end
-    local awaitingReturn = table.concat(BitArray)
-    return (awaitingReturn..("0"):rep((Fill or 8)-#awaitingReturn))
+local Uint32_decode = require("Uint32").decode
+local function sleep(s)
+    return (wait and wait(s) or os.execute("sleep "..tonumber(s))) or true
 end
-function Uint32_decode(Buffer,FirstIndex)
-    local BufferArray = {}
-    for BufferIndex=1,#Buffer,4 do
-        local SectorRaw = Buffer:sub(BufferIndex,BufferIndex+3)
-        local Sector = {}
-        for SectorIndex=1,#SectorRaw do
-            table.insert(Sector,toBase2(SectorRaw:sub(SectorIndex,SectorIndex):byte()))
-        end
-        table.insert(BufferArray,tonumber(table.concat(Sector):reverse(),2))
-    end
-    return not FirstIndex and BufferArray or BufferArray[1]
-end
-function Interpreter(Instructions,Debug)
+local function Interpreter(Instructions,Debug)
     local InstructionIndex = 0
     local Cells = {}
     local unpack = unpack or table.unpack
     local RAM = {[0]=(getfenv and getfenv() or _G)}
-    function ReadCell(CellIndex,CellArray)
+    local function ReadCell(CellIndex,CellArray)
         local CellArray = CellArray or Cells
         return CellArray[#CellArray-(CellIndex-1)]
     end
-    function ReadInstructionIndex(InstructionIndex)
+    local function ReadInstructionIndex(InstructionIndex)
         return Instructions:sub(InstructionIndex+1,InstructionIndex+1):byte()
     end
-    function ReadInstructionIndexRaw(InstructionIndex,Length)
+    local function ReadInstructionIndexRaw(InstructionIndex,Length)
         return Instructions:sub(InstructionIndex+1,InstructionIndex+Length)
     end
-    function ReadInstruction(Opcode,InstructionIndex,Cells)
+    local function ReadInstruction(Opcode,InstructionIndex,Cells)
         if Opcode == 0 then
             local RamIndex = Uint32_decode(ReadInstructionIndexRaw(InstructionIndex+1,4),true)
             --for Index=InstructionIndex+2,(InstructionIndex+1)+Len do
@@ -102,6 +84,10 @@ function Interpreter(Instructions,Debug)
         elseif Opcode == 16 then
             local Float0,Float1 = ReadCell(ReadInstructionIndex(InstructionIndex+1)),ReadCell(ReadInstructionIndex(InstructionIndex+2))
             return Float0%Float1,3
+        elseif Opcode == 17 then
+            return false
+        elseif Opcode == 18 then
+            return true
         elseif Opcode == 253 then
             local Length,CellValue = Uint32_decode(ReadInstructionIndexRaw(InstructionIndex+1,4),true),""
             for Index=InstructionIndex+5,(InstructionIndex+4)+Length do
@@ -127,8 +113,9 @@ function Interpreter(Instructions,Debug)
     while #Instructions > InstructionIndex do
         local PassIndexInt
         Cells[#Cells+1],PassIndexInt = ReadInstruction(ReadInstructionIndex(InstructionIndex),InstructionIndex,Cells)
-        if Debug then print("Opcode > ",ReadInstructionIndex(InstructionIndex),"Index > ",InstructionIndex+1,"","Cell > ","\""..tostring(Cells[#Cells]).."\"","Pass > ",PassIndexInt) end
+        if Debug then print("Opcode > ",ReadInstructionIndex(InstructionIndex),"Index > ",InstructionIndex+1,"","Cell > ","\""..tostring(Cells[#Cells]).."\" #"..type(Cells[#Cells]),"Pass > ",PassIndexInt) end
         InstructionIndex = InstructionIndex + (PassIndexInt or 1)
+        sleep(0.05)
     end
     return ReadCell(1)
 end
