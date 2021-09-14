@@ -1,15 +1,16 @@
 # Raccoon
 <a href="https://www.lua.org/"><img src="https://img.shields.io/badge/Lua-5.4-blue"></a>
 <a href="https://github.com/TheOfficialSeb/Raccoon"><img src="https://img.shields.io/badge/Raccoon-BETA-blue"></a>
+## What is a cell in Raccoon?
+	- All instruction return a value which then relative to the current one will be it's cell
+	- Cells are Uint8 no matter what so your limited at 255
 ## Opt Codes
-# What is a cell?
-	- Something here
 - 00
 	> NAME READ
 	> ARGS {Uint32(Read location)}
 - 01
 	> NAME MOVE
-	> ARGS {Uint8(Cell relative)}{Uint32(Read location)}
+	> ARGS {Cell(ANY)}{Uint32(Read location)}
 - 02
 	> NAME CLR
 	> ARGS {Uint32(Read location)}
@@ -17,5 +18,5 @@
 	> NAME NEWTABLE
 	> ARGS NONE
 - 04
-	> NAME NEWTABLE
-	> ARGS NONE
+	> NAME GETTABLE
+	> ARGS {Cell(TABLE)}{Cell(ANY)}
