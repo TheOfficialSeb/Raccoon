@@ -1,0 +1,16 @@
+ENV math
+STR random
+STR floor
+GETTABLE 3 2
+GETTABLE 4 2
+CALL 2
+INT 1000
+MUL 2 1
+CALL 4 1
+ENV print
+CALL 1 2
+ENV os
+STR execute
+GETTABLE 2 1
+STR open https://google.com
+CALL 2 1
