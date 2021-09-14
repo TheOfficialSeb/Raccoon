@@ -7,15 +7,19 @@
 ## Opt Codes
 - 00
 	> NAME READ
+	> 
 	> ARGS {Uint32(Read location)}
 - 01
 	> NAME MOVE
+	> 
 	> ARGS {Cell(ANY)}{Uint32(Read location)}
 - 02
 	> NAME CLR
+	> 
 	> ARGS {Uint32(Read location)}
 - 03
 	> NAME NEWTABLE
+	> 
 	> ARGS NONE
 - 04
 	> NAME GETTABLE
