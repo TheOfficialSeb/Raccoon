@@ -29,10 +29,7 @@ local function Interpreter(Instructions,Debug)
             RAM[RamIndex] = ReadCell(Cell0)
             return true,6
         elseif Opcode == 2 then
-            local Len,RamIndex = ReadInstructionIndex(InstructionIndex+1),""
-            for Index=InstructionIndex+2,(InstructionIndex+1)+Len do
-                RamIndex = RamIndex .. ReadInstructionIndex(Index)
-            end
+            local RamIndex = Uint32_decode(ReadInstructionIndexRaw(InstructionIndex+1,4),true)
             local Value = Value
             RAM[RamIndex] = nil
             return Value,Len+2
