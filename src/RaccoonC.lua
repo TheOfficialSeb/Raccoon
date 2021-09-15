@@ -63,8 +63,10 @@ return function(Input,Output)
                 Bytecode = Bytecode .. ("\5"..string.char(GetNumber(Arguments[1]))..string.char(GetNumber(Arguments[2]))..string.char(GetNumber(Arguments[3])))
             elseif InstructionName == "GETTABLE" then
                 Bytecode = Bytecode .. ("\4"..string.char(GetNumber(Arguments[1]))..string.char(GetNumber(Arguments[2])))
-            elseif InstructionName == "GETTABLE" then
-                Bytecode = Bytecode .. ("\4"..string.char(GetNumber(Arguments[1]))..string.char(GetNumber(Arguments[2])))
+            elseif InstructionName == "NEWTABLE" then
+                Bytecode = Bytecode .. "\3"
+            elseif InstructionName == "CLR" then
+                Bytecode = Bytecode .. ("\2"..Uint32.encode({GetNumber(Arguments[1])}))
             elseif InstructionName == "MOVE" then
                 Bytecode = Bytecode .. ("\1"..string.char(GetNumber(Arguments[1]))..Uint32.encode({GetNumber(Arguments[2])}))
             elseif InstructionName == "READ" then
