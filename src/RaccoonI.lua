@@ -2,11 +2,11 @@ local Uint32_decode = require("Uint32").decode
 local function sleep(s)
     return (wait and wait(s) or os.execute("sleep "..tonumber(s))) or true
 end
-local function Interpreter(Instructions,Debug)
+local function Interpreter(Instructions,ENV,Debug)
     local InstructionIndex = 0
     local Cells = {}
     local unpack = unpack or table.unpack
-    local RAM = {[0]=(getfenv and getfenv() or _G)}
+    local RAM = {[0]=(ENV or getfenv and getfenv() or _G)}
     local function ReadCell(CellIndex,CellArray)
         local CellArray = CellArray or Cells
         return CellArray[#CellArray-(CellIndex-1)]
